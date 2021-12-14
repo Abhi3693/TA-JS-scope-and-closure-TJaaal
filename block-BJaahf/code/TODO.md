@@ -55,26 +55,14 @@ reduce(nums, add, 0); //-> 8
 3. Construct a function intersection that compares input arrays and returns a new array with elements found in all of the inputs.
 
 ```js
-function intersection(arr1,arr2,arr3) {
-  let final = [];
-  let finalArray = [];
+function intersection(...arrays) {
+  let first = arrays[0];
 
-  function sortOutSame(val, arr, input) {
-    for(let num of arr) {
-      if(val === num) {
-        input.push(val);
-      }
-    }
+  for(let i = 1; i < arrays.length; i++) {
+    let second = arrays[i];
+    first = first.filter((elm)=> second.includes(elm))
   }
-
-  for(let num of arr1) {
-    sortOutSame(num, arr2, final);
-  }
-  
-  for(let num of final) {
-    sortOutSame(num, arr3, finalArray);
-  }
-  return finalArray
+  return first;
 }
 
 // Test
@@ -92,21 +80,14 @@ console.log(
 ```js
 
 
-function union(arr1,arr2,arr3) {
-  let final = arr1;
-  let finalArray = arr1;
+function union(...arrays) {
+  let first = arrays[0];
 
-
-  function findSame(num, array) {
-    for(let elm of array) {
-      if (num !== elm) {        
-        finalArray.push(num);
-      } 
-    }
+  for(let i = 1; i < arrays.length; i++){
+    let second = arrays[i];
+    first = first.filter((elm) => !second.includes(elm)).concat(second);
   }
-
-  return final;
-
+  return first;
 }
 
 
