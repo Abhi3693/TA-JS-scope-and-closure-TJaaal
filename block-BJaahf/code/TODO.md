@@ -10,8 +10,12 @@
 **You can use normal for loop for this function**
 
 ```js
-function loop() {
-  // Your code goes here
+
+function loop(sv, testFn, updateFn, bodyFn) {
+
+  for(let i = sv; testFn(i); i = updateFn(i)){
+    bodyFn(i);
+  }
 }
 
 loop(
@@ -30,7 +34,15 @@ loop(
 Here's how it works. The function has an "accumulator value" which starts as the `initialValue` and accumulates the output of each loop. The array is iterated over, passing the accumulator and the next array element as arguments to the `callback`. The callback's return value becomes the new accumulator value. The next loop executes with this new accumulator value. In the example above, the accumulator begins at 0. `add(0,4)` is called. The accumulator's value is now 4. Then `add(4, 1)` to make it 5. Finally `add(5, 3)` brings it to 8, which is returned.
 
 ```js
-function reduce(array, callback, initialValue) {}
+
+function reduce(array, callback, initialValue) {
+  let acc = initialValue;
+
+  for(let num of array) {
+    acc = callback(acc , num);
+  }
+  return acc;
+}
 
 // Test
 var nums = [4, 1, 3];
@@ -43,7 +55,27 @@ reduce(nums, add, 0); //-> 8
 3. Construct a function intersection that compares input arrays and returns a new array with elements found in all of the inputs.
 
 ```js
-function intersection(arrays) {}
+function intersection(arr1,arr2,arr3) {
+  let final = [];
+  let finalArray = [];
+
+  function sortOutSame(val, arr, input) {
+    for(let num of arr) {
+      if(val === num) {
+        input.push(val);
+      }
+    }
+  }
+
+  for(let num of arr1) {
+    sortOutSame(num, arr2, final);
+  }
+  
+  for(let num of final) {
+    sortOutSame(num, arr3, finalArray);
+  }
+  return finalArray
+}
 
 // Test
 console.log(
@@ -58,7 +90,25 @@ console.log(
 4. Construct a function `union` that compares input arrays and returns a new array that contains all elements. If there are duplicate elements, only add it once to the new array. Preserve the order of the elements starting from the first element of the first input array.
 
 ```js
-function union(arrays) {}
+
+
+function union(arr1,arr2,arr3) {
+  let final = arr1;
+  let finalArray = arr1;
+
+
+  function findSame(num, array) {
+    for(let elm of array) {
+      if (num !== elm) {        
+        finalArray.push(num);
+      } 
+    }
+  }
+
+  return final;
+
+}
+
 
 // Test
 console.log(
