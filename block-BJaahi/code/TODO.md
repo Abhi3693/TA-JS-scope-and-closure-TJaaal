@@ -39,10 +39,10 @@ var nextMessage = undefined;
 username = 'Arya';
 brothers = ['John', 'Ryan', 'Bran'];
 
-console.log(username, brothers[0]);
+console.log(username, brothers[0]);// Arya , John
 
-message = sayHello(username);
-nextMessage = sayHello('Test');
+message = sayHello(username); // Hello Arya;
+nextMessage = sayHello('Test'); // Hello Test;
 ```
 
 2.
@@ -64,7 +64,22 @@ var nextMessage = sayHello('Test');
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+
+var username = undefined;
+let number;
+
+function sayHello(name) {
+  return `Hello ${name}`;
+}
+
+let message;
+var nextMessage = undefined;
+
+// Execution Phase
+
+console.log(username, numbers);
+undefined, ReferenceError: numbers is not defined;
 ```
 
 3.
@@ -85,7 +100,21 @@ var nextMessage = sayHello('Test');
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+
+let username;
+let number;
+
+let sayHello;
+
+let message;
+var nextMessage = undefined;
+
+// Execution Phase
+
+console.log(username, numbers);
+ReferenceError: username ,numbers is not defined;
+
 ```
 
 4.
@@ -107,7 +136,21 @@ var nextMessage = sayHello('Test');
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+
+let username;
+let number;
+
+let sayHello ;
+
+var nextMessage = undefined;
+
+// Execution Phase
+
+let username = 'Arya';
+console.log(username, numbers);
+ReferenceError: numbers is not defined;
+
 ```
 
 5.
@@ -122,7 +165,15 @@ let age = 21;
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+
+var name = undefined;
+let age;
+
+// Execution Phase
+
+console.log(name); // undefined
+console.log(age); // ReferenceError: age is not defined;
 ```
 
 6.
@@ -141,7 +192,30 @@ sayHi();
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+
+function sayHi(name) {
+  console.log(name);
+  console.log(age);
+  var name = 'Lydia';
+  let age = 21;
+}
+
+
+// Execution Phase
+
+//function execution context
+
+//function declaration 
+
+var name = undefined;
+var name = undefined;
+let age;
+
+//function execution
+
+console.log(name); // undefined
+console.log(age); // ReferenceError: age cannot access before initilize;
 ```
 
 7.
@@ -159,7 +233,31 @@ function sayHi(name) {
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+
+function sayHi(name) {
+  console.log(name);
+  console.log(age);
+  var name = 'Lydia';
+  let age = 21;
+}
+
+
+// Execution Phase
+sayHi();
+
+//function execution context
+
+//function declaration 
+
+var name = undefined;
+var name = undefined;
+let age;
+
+//function execution
+
+console.log(name); // undefined
+console.log(age); // ReferenceError: age cannot access before initilize;
 ```
 
 8.
@@ -177,7 +275,12 @@ let sayHi = function sayHi(name) {
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+let sauHi;
+
+// Execution Phase
+
+sayHi()// sayHi is not defined
 ```
 
 9.
@@ -192,7 +295,17 @@ let num2 = 30;
 <!-- Answer -->
 
 ```js
-// Your code goes here
+// Declaration Phase
+let num1;
+var sum = undefined;
+let num2 ;
+
+// Execution Phase
+
+let num1 = 21;
+console.log(sum) // 21 + undefined = NaN
+
+var sum = // num2 is not defined
 ```
 
 10.
@@ -212,11 +325,25 @@ let num2 = 200;
 
 let sum = add(num1, num2, 4, 5, 6);
 ```
-
 <!-- Answer -->
-
 ```js
-// Your code goes here
+// Declaration Phase
+var num1 = undefined;
+let sum2;
+let add;
+
+function addAgian(a, b) {
+  return a + b;
+}
+
+let num2;
+let sum;
+
+// Execution Phase
+
+var num1 = 21;
+let sum2 = // addAgain is not defined
+
 ```
 
 11.
@@ -237,7 +364,21 @@ let add = (a, b) => {
 <!-- Answer -->
 
 ```js
-// Your code goes here
+
+// Declaration Phase
+
+function test(a) {
+  let num1 = 21;
+  return add(a, num1);
+}
+
+let sum;
+
+let add;
+
+// Execution Phase
+
+let sum = // add is not defined
 ```
 
 12.
@@ -258,5 +399,20 @@ function add(a, b) {
 <!-- Answer -->
 
 ```js
-// Your code goes here
+
+// Declaration Phase
+
+function test(a) {
+  let num1 = 21;
+  return add(a, num1);
+}
+
+let sum;
+
+function add(a, b) {
+  return a + b;
+}
+
+// Execution Phase
+let sum = undefined
 ```
