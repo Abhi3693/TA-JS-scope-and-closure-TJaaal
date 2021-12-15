@@ -6,8 +6,14 @@ The returned function accepts a sentence. If the sentence contains the `fromWord
 
 ```js
 function censor(fromWord, toWord) {
-  //  Your code goes here
-}
+  return function searchStr(str) {
+
+    if (str.includes(fromWord)) {
+      console.log(str.replace(fromWord, toWord));
+    } else if (str.includes(toWord)) {
+      console.log(str.replace(toWord, fromWord));
+    }
+  }
 
 let censorSentence = censor('World', 'Sam');
 censorSentence('Hello World'); // Hello Sam
@@ -25,7 +31,21 @@ The returned function either accepts two parameter or one parameter.
 
 ```js
 function multipleCensor() {
-  //  Your code goes here
+  let final = [];
+  
+  return function(...arrays) {
+    
+    if(arrays.length > 1) {
+      final.push(arrays);
+    } else if(arrays.length === 1){
+
+      let str = String(arrays);
+      final.forEach((e)=> {  
+        str = str.replace(e[0], e[1]);
+      })
+      return str;
+    }
+  }
 }
 
 let censorQuote = multipleCensor();
@@ -49,8 +69,18 @@ The returned function accepts one parameter.
 - If the parameter is the same as the password it will return the object in which we stored the values.
 
 ```js
-function createCache() {
-  // Your code goes here
+function createCache(cb, pass) {
+
+  let obj = {};
+  return function (num) {
+
+    if(num === pass) {
+      return obj;
+    } else {
+      obj[num] = cb(num);
+      return cb(num);
+    }     
+  };
 }
 
 function add10(num) {
@@ -69,8 +99,21 @@ addCache('foo'); // {12: 22, 100: 110, 1: 11}
 4. Change the above function in such a way that when the returned function is called with any other value than password. It should first check the object where we are storing the argument and return value. If the key is present return the value form the object itself. Otherwise call the callback function with the parameter.
 
 ```js
-function createCache() {
-  // Your code goes here
+function createCache(cb, pass) {
+
+  let obj = {};
+  return function(val) {
+
+    if(val === pass) {
+      console.log(obj);
+    } else {
+      if (obj[val]) {
+        return obj[val];
+      } else {
+        obj[val] = cb(val);
+      }
+    }
+  }
 }
 
 function add10(num) {
