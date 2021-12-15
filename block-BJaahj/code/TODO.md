@@ -5,16 +5,13 @@
 ```js
 function objOfMatches(array1, array2, callback) {
  
-  let obj ={}
-  for(let i = 0; i < array2.length; i++) {
-    array1.forEach((e)=> {
-      
-      if (callback(e) === array2[i]){
-        obj[e] = array2[i];
-      }
-    })
-  }
-  return obj;
+  return array1.reduce((prev, curr, index)=> {
+
+    if(array2[index] === callback(curr)){
+      prev[curr] = array2[index];
+    }
+    return prev;
+  }, {})
 }
 
 // TEST
@@ -33,18 +30,17 @@ console.log(
 
 ```js
 function multiMap(arrVals, arrCallbacks) {
-  let obj = {};
 
-  arrVals.forEach((e) => {
+  return arrVals.reduce((prev, curr, index)=> {
 
-    let allFn = [];
-    for(let elm of arrCallbacks) {  
-      allFn = allFn.concat(elm(e));
-    }
-    
-    obj[e] = allFn;
-  })
-  return obj;
+    let final = arrCallbacks.map((e) => {
+      return e(curr);
+    })
+
+  prev[curr] = final;
+
+    return prev;
+  }, {})
 }
 
 // TEST
@@ -76,23 +72,19 @@ The final output from the third array will be matched agains the same indexed el
 
 ```js
 function objOfMatchesWithArray(array1, array2, callback) {
-  let obj = {};
 
+  return array1.reduce((prev, curr, index) => {
 
-  array1.forEach((e) => {
-    let val = e;
-    for(let fn of callback){
-      val = fn(val);      
+    let final = callback.reduce((prev,fn)=> {
+      return fn(prev);
+    }, curr);
+
+    if(final === array2[index]) {
+      prev[curr] = array2[index];
     }
-
-    for(let item of array2) {
-      if(val === item){
-        obj[e] = item;
-      }
-    }
-  })
-
-  return obj;
+    return prev;
+  }, {})
+  
 }
 // TEST
 console.log(
@@ -125,18 +117,12 @@ In the final object the key will be the value form the first array like `hi` and
 ```js
 function objOfMatchesWithArray(array1, callback) {
 
-  let obj = {};
+  return array1.reduce((prev, curr) => {
 
-  array1.forEach((e) => {
+    prev[curr] = callback.map((e)=> e(curr));
 
-    let val = [];
-    for(let fn of callback){
-      val.push(fn(e));
-    }
-
-    obj[e] = val;
-  })
-  return obj;
+    return prev
+  }, {})
 }
 
 // TEST
@@ -162,18 +148,6 @@ console.log(
 
 5.
 
-```js
-function sayHi() {
-  console.log('Hi');
-}
-function sayHello() {
-  console.log('Hello');
-}
-function sayHey() {
-  console.log('Hey');
-}
-```
-
 Create a function named `schedule` which accept two arguments an array of functions like `[sayHi, sayHello, sayHey]` and array of seconds like `[1, 2, 3]`. Both array will be of same length. If that's not the case alert a message saying `invalid input`. (1 second is 1000 ms)
 
 The function `schedule` will execute the function at first index after the value in value on first index in second array. i.e execute `sayHi` after `1` second and `sayHello` after `2` second.
@@ -183,14 +157,10 @@ The function `schedule` will execute the function at first index after the value
 function schedule(allCB, arr ) {
 
   if(allCB.length === arr.length) {
-    let num = 0;
     
-    function repeat(e) {
-      setTimeout(allCB[num], (e * 1000));
-      num = num + 1;
-      
-    }
-    arr.forEach(repeat)
+    allCB.forEach((fn, index)=> {
+      setTimeout(fn, (arr[index] * 1000));
+    })
 
   } else {
     alert("Enter valid input");
