@@ -2,15 +2,15 @@
 
 ```js
 function once(cb) {
-  let final = [];
+  let isCalled = false;
   return function(){
     
-    if(final.length < 1) {
-      alert("You can only call me once!");
-    } else if(final.length = 1) {
+    if(!isCalled) {
+      cb();
+      isCalled = true;
+    } else {
       alert("Can't be called twice");
     }
-    final.push(1);
   };
 }
 
@@ -28,15 +28,15 @@ log(); // return undefinde (can't be called twice)
 ```js
 
 function once(cb,str) {
-  let final = [];
+  let isCalled = false;
   return function(){
     
-    if(final.length < 1) {
+    if(!isCalled) {
       cb(str);
-    } else if(final.length = 1) {
-      cb("Can't be called twice");
+      isCalled = true;
+    } else {
+      alert("Can't be called twice");
     }
-    final.push(1);
   };
 }
 
@@ -53,19 +53,17 @@ log(); // return undefinde (can't be called twice)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
 
 ```js
-function once(...arr) {
-  let final = [];
-  return function() {
-    final.push(1);
-
-    if (final.length === 1) {
-      for (let i = 1; i < arr.length; i++){
-        arr[0](arr[i])
-      }
-    } else if(final.length > 1) {
-        arr[0]("can't be called twice");
-    } 
-  }
+function once(cb, ...arr) {
+  let isCalled = false;
+  return function(){
+    
+    if(!isCalled) {
+      cb(...arr);
+      isCalled = true;
+    } else {
+      alert("Can't be called twice");
+    }
+  };
 }
 // TEST
 let log = once(console.log, 'Message one', 'Message Two');
@@ -77,17 +75,17 @@ log(); // return undefinde (can't be called twice)
 
 ```js
 function nTimes(cb, times, ...rest) {
-  let count = [];
+  let count = 0;
 
   return function () {
-    if(count.length < times) {
+    if(count < times) {
       for(let item of rest) {
-        cb(item)
+        cb(...rest)
       }
     } else {
-      cb("can't be called")
+      alert("can't be called")
     }
-    count.push(1);
+    count++;
   } 
 }
 
