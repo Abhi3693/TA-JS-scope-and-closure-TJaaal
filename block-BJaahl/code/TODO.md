@@ -2,7 +2,16 @@
 
 ```js
 function once(cb) {
-  // your code goes here
+  let final = [];
+  return function(){
+    
+    if(final.length < 1) {
+      alert("You can only call me once!");
+    } else if(final.length = 1) {
+      alert("Can't be called twice");
+    }
+    final.push(1);
+  };
 }
 
 // TEST
@@ -17,8 +26,18 @@ log(); // return undefinde (can't be called twice)
 2. Change the above function in such a way that the function accepts two parameter a callback function and parameter for the callback function. When calling the function pass the parameters.
 
 ```js
-function once(cb) {
-  // your code goes here
+
+function once(cb,str) {
+  let final = [];
+  return function(){
+    
+    if(final.length < 1) {
+      cb(str);
+    } else if(final.length = 1) {
+      cb("Can't be called twice");
+    }
+    final.push(1);
+  };
 }
 
 // TEST
@@ -34,10 +53,20 @@ log(); // return undefinde (can't be called twice)
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
 
 ```js
-function once(cb) {
-  // your code goes here
-}
+function once(...arr) {
+  let final = [];
+  return function() {
+    final.push(1);
 
+    if (final.length === 1) {
+      for (let i = 1; i < arr.length; i++){
+        arr[0](arr[i])
+      }
+    } else if(final.length > 1) {
+        arr[0]("can't be called twice");
+    } 
+  }
+}
 // TEST
 let log = once(console.log, 'Message one', 'Message Two');
 log(); // log message "Message One Message Two"
@@ -48,7 +77,18 @@ log(); // return undefinde (can't be called twice)
 
 ```js
 function nTimes(cb, times, ...rest) {
-  // your code goes here
+  let count = [];
+
+  return function () {
+    if(count.length < times) {
+      for(let item of rest) {
+        cb(item)
+      }
+    } else {
+      cb("can't be called")
+    }
+    count.push(1);
+  } 
 }
 
 // TEST
